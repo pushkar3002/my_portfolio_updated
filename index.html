@@ -3,176 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pushkar Lal - DevOps Engineer | AWS Trainer | Cloud Community Builder</title>
+    <title>Pushkar Lal - DevOps Engineer Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="cursor-trail"></div>
-    
-    <!-- Loading Animation -->
-    <div class="loading-screen">
-        <div class="loading-3d">
-            <div class="loading-cube">
-                <div class="cube-face front"></div>
-                <div class="cube-face back"></div>
-                <div class="cube-face right"></div>
-                <div class="cube-face left"></div>
-                <div class="cube-face top"></div>
-                <div class="cube-face bottom"></div>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader">
+            <div class="cube">
+                <div class="face front">PL</div>
+                <div class="face back">DevOps</div>
+                <div class="face right">AWS</div>
+                <div class="face left">K8s</div>
+                <div class="face top">CI/CD</div>
+                <div class="face bottom">Cloud</div>
             </div>
-            <div class="loading-text">Loading Experience...</div>
+            <div class="loading-text">
+                <span>Loading Portfolio...</span>
+            </div>
         </div>
     </div>
 
+    <!-- Particle Background -->
+    <div id="particles-container"></div>
+
     <!-- Navigation -->
-    <nav class="nav-3d">
+    <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <span class="logo-text">Pushkar Lal</span>
+                <span>PL</span>
             </div>
-            <ul class="nav-menu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#experience" class="nav-link">Experience</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero-section">
-        <div class="particles"></div>
+    <section id="home" class="hero">
         <div class="hero-content">
-            <div class="hero-text">
-                <h1 class="hero-title">
-                    <span class="text-3d">Pushkar Lal</span>
-                </h1>
-                <div class="hero-subtitle">
-                    <span class="typing-text">DevOps Engineer | AWS Trainer | Cloud Community Builder</span>
-                </div>
-                <p class="hero-description">Helping You Scale With The Cloud</p>
-                <div class="hero-buttons">
-                    <button class="btn btn--primary btn-3d">Download CV</button>
-                    <button class="btn btn--outline btn-3d">Contact Me</button>
-                </div>
+            <div class="profile-pic">
+                <img src="profile.jpg" alt="Pushkar Lal" class="profile-image">
             </div>
-            <div class="hero-visual">
-                <div class="floating-cloud">
-                    <div class="cloud-icon">☁️</div>
-                </div>
-                <div class="floating-server">
-                    <div class="server-icon">🖥️</div>
-                </div>
-                <div class="floating-gear">
-                    <div class="gear-icon">⚙️</div>
-                </div>
+            <h1 class="hero-title">
+                <span class="name">Pushkar Lal</span>
+            </h1>
+            <div class="hero-subtitle">
+                <span class="typing-text"></span>
             </div>
-        </div>
-        <div class="scroll-indicator">
-            <div class="scroll-arrow"></div>
+            <p class="hero-description">
+                Passionate DevOps Engineer specializing in AWS Cloud, CI/CD, and modern infrastructure automation. 
+                Helping organizations scale with cutting-edge cloud technologies.
+            </p>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn btn-primary">
+                    <i class="fas fa-envelope"></i> Get In Touch
+                </a>
+                <a href="#projects" class="btn btn-secondary">
+                    <i class="fas fa-code"></i> View Projects
+                </a>
+            </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="about-section">
+    <section id="about" class="about">
         <div class="container">
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
-                <div class="about-card-3d">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <div class="profile-image">
-                                <div class="profile-placeholder">PL</div>
-                            </div>
-                            <h3>Pushkar Lal</h3>
-                            <p>DevOps Engineer</p>
+                <div class="about-card">
+                    <div class="card-front">
+                        <h3>Personal Info</h3>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Jaipur, Rajasthan, India</span>
                         </div>
-                        <div class="card-back">
-                            <h3>Contact Info</h3>
-                            <div class="contact-details">
-                                <p>📍 Jaipur, Rajasthan, India</p>
-                                <p>📞 +91 9661986771</p>
-                                <p>✉️ pushkar3002@gmail.com</p>
-                                <p>💼 LinkedIn Profile</p>
-                            </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+91 9661986771</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>pushkar3002@gmail.com</span>
                         </div>
                     </div>
                 </div>
                 <div class="about-text">
-                    <p>Passionate about AWS Cloud, DevOps, and CI/CD, I specialize in training professionals and organizations to harness the power of the cloud. With hands-on expertise in AWS services, Kubernetes (EKS), Jenkins, ArgoCD, Docker, EC2, Grafana, and more, I help teams streamline deployments, optimize cloud infrastructure, and enhance scalability.</p>
-                    <ul class="about-highlights">
-                        <li>Train and mentor professionals on AWS and DevOps best practices</li>
-                        <li>Design and implement robust CI/CD pipelines for seamless deployments</li>
-                        <li>Build and lead cloud communities, driving collaboration and innovation</li>
-                        <li>Guide teams in cloud adoption, automation, and cost optimization</li>
-                    </ul>
+                    <p>
+                        I'm a passionate DevOps Engineer and AWS Trainer with expertise in cloud infrastructure, 
+                        CI/CD pipelines, and modern development practices. Currently working at TECH GLANCE SERVICE, 
+                        I specialize in helping organizations scale their operations through intelligent automation 
+                        and cloud-native solutions.
+                    </p>
+                    <p>
+                        As a Cloud Community Builder, I conduct workshops and training sessions, empowering 
+                        professionals with cloud computing skills. I believe in continuous learning and 
+                        fostering innovation through knowledge sharing.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="skills-section">
+    <section id="skills" class="skills">
         <div class="container">
-            <h2 class="section-title">Skills & Technologies</h2>
+            <h2 class="section-title">Technical Skills</h2>
             <div class="skills-grid">
                 <div class="skill-category">
-                    <h3>Primary Skills</h3>
-                    <div class="skills-list">
-                        <div class="skill-item" data-skill="GitLab">
-                            <div class="skill-icon">🦊</div>
-                            <span>GitLab</span>
+                    <h3>Cloud Platforms</h3>
+                    <div class="skill-item">
+                        <span class="skill-name">AWS</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="95%"></div>
                         </div>
-                        <div class="skill-item" data-skill="AWS">
-                            <div class="skill-icon">☁️</div>
-                            <span>AWS Cloud</span>
-                        </div>
-                        <div class="skill-item" data-skill="Kubernetes">
-                            <div class="skill-icon">⚙️</div>
-                            <span>Kubernetes</span>
-                        </div>
-                        <div class="skill-item" data-skill="Jenkins">
-                            <div class="skill-icon">🔧</div>
-                            <span>Jenkins</span>
-                        </div>
-                        <div class="skill-item" data-skill="Docker">
-                            <div class="skill-icon">🐳</div>
-                            <span>Docker</span>
-                        </div>
-                        <div class="skill-item" data-skill="ArgoCD">
-                            <div class="skill-icon">🚀</div>
-                            <span>ArgoCD</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Azure</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="85%"></div>
                         </div>
                     </div>
                 </div>
+
                 <div class="skill-category">
-                    <h3>Secondary Skills</h3>
-                    <div class="skills-list">
-                        <div class="skill-item" data-skill="EC2">
-                            <div class="skill-icon">💻</div>
-                            <span>EC2</span>
+                    <h3>DevOps Tools</h3>
+                    <div class="skill-item">
+                        <span class="skill-name">GitLab</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="90%"></div>
                         </div>
-                        <div class="skill-item" data-skill="Grafana">
-                            <div class="skill-icon">📊</div>
-                            <span>Grafana</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Jenkins</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="88%"></div>
                         </div>
-                        <div class="skill-item" data-skill="Azure">
-                            <div class="skill-icon">🌐</div>
-                            <span>Azure</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Docker</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="92%"></div>
                         </div>
-                        <div class="skill-item" data-skill="Linux">
-                            <div class="skill-icon">🐧</div>
-                            <span>Linux</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Container Orchestration</h3>
+                    <div class="skill-item">
+                        <span class="skill-name">Kubernetes</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="87%"></div>
                         </div>
-                        <div class="skill-item" data-skill="Git">
-                            <div class="skill-icon">📂</div>
-                            <span>Git</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">ArgoCD</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="83%"></div>
                         </div>
-                        <div class="skill-item" data-skill="CI/CD">
-                            <div class="skill-icon">🔄</div>
-                            <span>CI/CD</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Monitoring & Observability</h3>
+                    <div class="skill-item">
+                        <span class="skill-name">Grafana</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Prometheus</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="80%"></div>
                         </div>
                     </div>
                 </div>
@@ -181,44 +198,35 @@
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="experience-section">
+    <section id="experience" class="experience">
         <div class="container">
-            <h2 class="section-title">Experience</h2>
-            <div class="timeline-3d">
+            <h2 class="section-title">Professional Experience</h2>
+            <div class="timeline">
                 <div class="timeline-item">
-                    <div class="timeline-marker"></div>
                     <div class="timeline-content">
                         <h3>DevOps Engineer</h3>
                         <h4>TECH GLANCE SERVICE (TGS)</h4>
-                        <p class="timeline-period">September 2023 - Present</p>
-                        <p>Working on AWS and Azure cloud platforms, implementing DevOps best practices and automation. Designing scalable cloud infrastructure and optimizing deployment pipelines.</p>
+                        <span class="timeline-date">September 2023 - Present</span>
+                        <p>Working on AWS and Azure cloud platforms, implementing CI/CD pipelines, 
+                           and managing containerized applications with Kubernetes.</p>
                     </div>
                 </div>
+
                 <div class="timeline-item">
-                    <div class="timeline-marker"></div>
                     <div class="timeline-content">
                         <h3>Student</h3>
                         <h4>LinuxWorld Informatics Pvt Ltd</h4>
-                        <p class="timeline-period">September 2023 - Present</p>
-                        <p>Continuous learning and development in DevOps and cloud technologies. Specialized training in AWS, Kubernetes, and modern DevOps practices.</p>
+                        <span class="timeline-date">September 2023 - Present</span>
+                        <p>Continuing education in advanced DevOps practices and cloud technologies.</p>
                     </div>
                 </div>
+
                 <div class="timeline-item">
-                    <div class="timeline-marker"></div>
                     <div class="timeline-content">
                         <h3>Campus Ambassador</h3>
                         <h4>MYn App</h4>
-                        <p class="timeline-period">August 2022 - November 2022</p>
-                        <p>Promoted app awareness and engagement among students, building community connections and driving user adoption.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <h3>Campus Ambassador</h3>
-                        <h4>ActivityRockets</h4>
-                        <p class="timeline-period">May 2022 - June 2022</p>
-                        <p>Built community engagement and brand awareness, facilitating connections between students and platform services.</p>
+                        <span class="timeline-date">August 2022 - November 2022</span>
+                        <p>Promoted technology awareness and built community engagement.</p>
                     </div>
                 </div>
             </div>
@@ -226,83 +234,69 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="projects-section">
+    <section id="projects" class="projects">
         <div class="container">
-            <h2 class="section-title">Projects</h2>
+            <h2 class="section-title">Featured Projects</h2>
             <div class="projects-grid">
-                <div class="project-card-3d">
-                    <div class="project-inner">
-                        <div class="project-front">
-                            <div class="project-icon">🔄</div>
-                            <h3>CI/CD Pipeline Automation</h3>
-                            <p>Implemented automated CI/CD pipelines using Jenkins and GitLab for seamless deployments and improved development workflows.</p>
+                <div class="project-card">
+                    <div class="project-front">
+                        <h3>CI/CD Pipeline Automation</h3>
+                        <p>Automated deployment pipeline using GitLab CI/CD and Kubernetes</p>
+                        <div class="project-tech">
+                            <span>GitLab</span>
+                            <span>Kubernetes</span>
+                            <span>Docker</span>
                         </div>
-                        <div class="project-back">
-                            <h3>Technologies Used</h3>
-                            <div class="project-tech">
-                                <span>Jenkins</span>
-                                <span>GitLab</span>
-                                <span>Docker</span>
-                                <span>AWS</span>
-                            </div>
-                            <p>DevOps Automation Solution</p>
+                    </div>
+                    <div class="project-back">
+                        <h3>Project Details</h3>
+                        <p>Implemented end-to-end CI/CD pipeline reducing deployment time by 70% 
+                           and improving code quality with automated testing.</p>
+                        <div class="project-links">
+                            <a href="#" class="project-link">View Demo</a>
+                            <a href="#" class="project-link">Source Code</a>
                         </div>
                     </div>
                 </div>
-                <div class="project-card-3d">
-                    <div class="project-inner">
-                        <div class="project-front">
-                            <div class="project-icon">⚙️</div>
-                            <h3>Kubernetes Cluster Management</h3>
-                            <p>Designed and managed production Kubernetes clusters on AWS EKS with automated scaling and monitoring.</p>
+
+                <div class="project-card">
+                    <div class="project-front">
+                        <h3>AWS Infrastructure as Code</h3>
+                        <p>Scalable cloud infrastructure using Terraform and AWS services</p>
+                        <div class="project-tech">
+                            <span>AWS</span>
+                            <span>Terraform</span>
+                            <span>CloudFormation</span>
                         </div>
-                        <div class="project-back">
-                            <h3>Technologies Used</h3>
-                            <div class="project-tech">
-                                <span>Kubernetes</span>
-                                <span>AWS EKS</span>
-                                <span>ArgoCD</span>
-                                <span>Docker</span>
-                            </div>
-                            <p>Container Orchestration</p>
+                    </div>
+                    <div class="project-back">
+                        <h3>Project Details</h3>
+                        <p>Designed and implemented scalable AWS infrastructure with 
+                           auto-scaling, load balancing, and monitoring capabilities.</p>
+                        <div class="project-links">
+                            <a href="#" class="project-link">View Demo</a>
+                            <a href="#" class="project-link">Documentation</a>
                         </div>
                     </div>
                 </div>
-                <div class="project-card-3d">
-                    <div class="project-inner">
-                        <div class="project-front">
-                            <div class="project-icon">☁️</div>
-                            <h3>Cloud Infrastructure Optimization</h3>
-                            <p>Optimized cloud costs and performance using AWS best practices, reducing infrastructure costs by 40%.</p>
-                        </div>
-                        <div class="project-back">
-                            <h3>Technologies Used</h3>
-                            <div class="project-tech">
-                                <span>AWS</span>
-                                <span>EC2</span>
-                                <span>Grafana</span>
-                                <span>CloudWatch</span>
-                            </div>
-                            <p>Cost Optimization</p>
+
+                <div class="project-card">
+                    <div class="project-front">
+                        <h3>Kubernetes Cluster Management</h3>
+                        <p>Production-ready Kubernetes cluster with monitoring and logging</p>
+                        <div class="project-tech">
+                            <span>Kubernetes</span>
+                            <span>Grafana</span>
+                            <span>Prometheus</span>
                         </div>
                     </div>
-                </div>
-                <div class="project-card-3d">
-                    <div class="project-inner">
-                        <div class="project-front">
-                            <div class="project-icon">🎓</div>
-                            <h3>DevOps Training Platform</h3>
-                            <p>Created comprehensive training materials and workshops for DevOps practices and AWS cloud services.</p>
-                        </div>
-                        <div class="project-back">
-                            <h3>Technologies Used</h3>
-                            <div class="project-tech">
-                                <span>AWS</span>
-                                <span>Linux</span>
-                                <span>Git</span>
-                                <span>Training</span>
-                            </div>
-                            <p>Educational Content</p>
+                    <div class="project-back">
+                        <h3>Project Details</h3>
+                        <p>Deployed and managed production Kubernetes clusters with 
+                           comprehensive monitoring, logging, and alerting systems.</p>
+                        <div class="project-links">
+                            <a href="#" class="project-link">View Demo</a>
+                            <a href="#" class="project-link">Architecture</a>
                         </div>
                     </div>
                 </div>
@@ -311,55 +305,68 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="contact-section">
+    <section id="contact" class="contact">
         <div class="container">
             <h2 class="section-title">Get In Touch</h2>
             <div class="contact-content">
                 <div class="contact-info">
-                    <div class="contact-item-3d">
-                        <div class="contact-icon">📞</div>
-                        <div class="contact-text">
-                            <h3>Phone</h3>
-                            <p>+91 9661986771</p>
-                        </div>
+                    <h3>Let's Connect</h3>
+                    <p>Ready to discuss your next cloud project or need DevOps expertise? 
+                       I'm always open to new opportunities and collaborations.</p>
+
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>pushkar3002@gmail.com</span>
                     </div>
-                    <div class="contact-item-3d">
-                        <div class="contact-icon">✉️</div>
-                        <div class="contact-text">
-                            <h3>Email</h3>
-                            <p>pushkar3002@gmail.com</p>
-                        </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+91 9661986771</span>
                     </div>
-                    <div class="contact-item-3d">
-                        <div class="contact-icon">💼</div>
-                        <div class="contact-text">
-                            <h3>LinkedIn</h3>
-                            <p><a href="https://www.linkedin.com/in/pushkar-lal-814609202" target="_blank">linkedin.com/in/pushkar-lal-814609202</a></p>
-                        </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Jaipur, Rajasthan, India</span>
                     </div>
-                    <div class="contact-item-3d">
-                        <div class="contact-icon">💬</div>
-                        <div class="contact-text">
-                            <h3>WhatsApp</h3>
-                            <p><a href="https://wa.me/919661986771" target="_blank">wa.me/919661986771</a></p>
-                        </div>
+
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/pushkar-lal-814609202" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://wa.me/919661986771" class="social-link">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="mailto:pushkar3002@gmail.com" class="social-link">
+                            <i class="fas fa-envelope"></i>
+                        </a>
                     </div>
                 </div>
-                <div class="contact-form-3d">
-                    <form class="contact-form">
+
+                <div class="contact-form">
+                    <form id="contact-form">
                         <div class="form-group">
-                            <label class="form-label">Your Name</label>
-                            <input type="text" name="name" placeholder="Enter your name" class="form-control" required>
+                            <input type="text" id="name" name="name" required>
+                            <label for="name">Your Name</label>
                         </div>
+
                         <div class="form-group">
-                            <label class="form-label">Your Email</label>
-                            <input type="email" name="email" placeholder="Enter your email" class="form-control" required>
+                            <input type="email" id="email" name="email" required>
+                            <label for="email">Your Email</label>
                         </div>
+
                         <div class="form-group">
-                            <label class="form-label">Your Message</label>
-                            <textarea name="message" placeholder="Enter your message" class="form-control" rows="5" required></textarea>
+                            <input type="text" id="subject" name="subject" required>
+                            <label for="subject">Subject</label>
                         </div>
-                        <button type="submit" class="btn btn--primary btn-3d">Send Message</button>
+
+                        <div class="form-group">
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                            <label for="message">Your Message</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
                     </form>
                 </div>
             </div>
@@ -369,7 +376,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 Pushkar Lal. All rights reserved. | DevOps Engineer | AWS Trainer | Cloud Community Builder</p>
+            <p>&copy; 2025 Pushkar Lal. All rights reserved.</p>
         </div>
     </footer>
 

@@ -1,789 +1,469 @@
-// Global variables
-let particles = [];
-let mouseX = 0;
-let mouseY = 0;
-let isLoading = true;
-
-// Initialize everything when DOM is loaded
+// Portfolio Website JavaScript
 document.addEventListener('DOMContentLoaded', function() {
-    initializeApp();
-});
 
-function initializeApp() {
-    // Initialize all components
-    initializeLoading();
-    initializeCursor();
-    initializeParticles();
-    initializeScrollAnimations();
-    initializeNavigation();
-    initializeContactForm();
-    initializeSkillAnimations();
-    initializeProjectCards();
-    initializeHoverEffects();
-    initializeButtons();
-    
-    // Start loading sequence
-    setTimeout(hideLoading, 3000);
-}
+    // Loading Screen
+    const loadingScreen = document.getElementById('loading-screen');
 
-// Loading Screen Animation
-function initializeLoading() {
-    const loadingScreen = document.querySelector('.loading-screen');
-    const loadingText = document.querySelector('.loading-text');
-    
-    if (!loadingScreen || !loadingText) return;
-    
-    // Animate loading text
-    const texts = ['Loading Experience...', 'Initializing 3D World...', 'Almost Ready...'];
-    let textIndex = 0;
-    
-    const textInterval = setInterval(() => {
-        if (textIndex < texts.length - 1) {
-            textIndex++;
-            loadingText.textContent = texts[textIndex];
-        } else {
-            clearInterval(textInterval);
-        }
-    }, 1000);
-}
-
-function hideLoading() {
-    const loadingScreen = document.querySelector('.loading-screen');
-    if (loadingScreen) {
-        loadingScreen.style.opacity = '0';
+    window.addEventListener('load', function() {
         setTimeout(() => {
-            loadingScreen.style.display = 'none';
-            isLoading = false;
-            triggerHeroAnimations();
-            initializeTypingEffect();
-        }, 500);
-    }
-}
-
-// Custom Cursor Trail with Purple theme
-function initializeCursor() {
-    const cursor = document.querySelector('.cursor-trail');
-    if (!cursor) return;
-    
-    let cursorX = 0;
-    let cursorY = 0;
-    let targetX = 0;
-    let targetY = 0;
-    
-    document.addEventListener('mousemove', (e) => {
-        if (isLoading) return;
-        
-        targetX = e.clientX;
-        targetY = e.clientY;
-        mouseX = e.clientX;
-        mouseY = e.clientY;
+            loadingScreen.classList.add('hidden');
+            initializeAnimations();
+        }, 2000);
     });
-    
-    function updateCursor() {
-        if (isLoading) return;
-        
-        cursorX += (targetX - cursorX) * 0.1;
-        cursorY += (targetY - cursorY) * 0.1;
-        
-        cursor.style.left = cursorX + 'px';
-        cursor.style.top = cursorY + 'px';
-        
-        requestAnimationFrame(updateCursor);
-    }
-    
-    updateCursor();
-}
 
-// Enhanced Particle System with White and Purple particles
-function initializeParticles() {
-    const particleContainer = document.querySelector('.particles');
-    if (!particleContainer) return;
-    
-    function createParticle() {
-        if (isLoading) return;
-        
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
-        particle.style.animationDelay = Math.random() * 2 + 's';
-        
-        // Randomly choose between purple and white particles
-        const isPurple = Math.random() > 0.5;
-        if (isPurple) {
-            particle.style.background = '#8B5CF6';
-            particle.style.boxShadow = '0 0 10px rgba(139, 92, 246, 0.8)';
-        } else {
-            particle.style.background = '#ffffff';
-            particle.style.boxShadow = '0 0 10px rgba(255, 255, 255, 0.8)';
-        }
-        
-        particleContainer.appendChild(particle);
-        
-        setTimeout(() => {
-            if (particle.parentNode) {
-                particle.remove();
-            }
-        }, 6000);
-    }
-    
-    // Create particles continuously
-    setInterval(createParticle, 300);
-}
-
-// Scroll Animations
-function initializeScrollAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                animateOnScroll(entry.target);
-            }
-        });
-    }, observerOptions);
-    
-    // Observe all sections
-    document.querySelectorAll('section').forEach(section => {
-        section.classList.add('fade-in');
-        observer.observe(section);
-    });
-    
-    // Observe specific elements
-    document.querySelectorAll('.timeline-item, .skill-item, .project-card-3d, .contact-item-3d').forEach(item => {
-        item.classList.add('fade-in');
-        observer.observe(item);
-    });
-}
-
-function animateOnScroll(element) {
-    // Add specific animations based on element type
-    if (element.classList.contains('timeline-item')) {
-        element.style.transform = 'perspective(1000px) rotateX(0deg) translateY(0)';
-    } else if (element.classList.contains('skill-item')) {
-        element.style.transform = 'perspective(1000px) rotateX(0deg) translateY(0)';
-    }
-}
-
-// Fixed Navigation with improved smooth scrolling
-function initializeNavigation() {
+    // Mobile Navigation
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
-    const sections = document.querySelectorAll('section');
-    
-    // Enhanced smooth scrolling functionality
+
+    navToggle.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+        navToggle.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking on a link
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+        });
+    });
+
+    // Smooth Scrolling for Navigation Links
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            e.stopPropagation();
-            
-            const href = this.getAttribute('href');
-            if (!href || !href.startsWith('#')) return;
-            
-            const targetId = href.substring(1);
+            const targetId = this.getAttribute('href').substring(1);
             const targetSection = document.getElementById(targetId);
-            
+
             if (targetSection) {
-                // Remove active class from all links
-                navLinks.forEach(navLink => navLink.classList.remove('active'));
-                // Add active class to clicked link
-                this.classList.add('active');
-                
-                // Get navigation height for offset calculation
-                const nav = document.querySelector('.nav-3d');
-                const navHeight = nav ? nav.offsetHeight : 0;
-                
-                // Calculate target position
-                const targetPosition = targetSection.offsetTop - navHeight - 20;
-                
-                // Smooth scroll to target
-                window.scrollTo({
-                    top: Math.max(0, targetPosition),
-                    behavior: 'smooth'
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
                 });
             }
         });
     });
-    
-    // Enhanced active link detection
-    const observerOptions = {
-        threshold: 0.3,
-        rootMargin: '-100px 0px -100px 0px'
-    };
-    
-    const navObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const sectionId = entry.target.getAttribute('id');
-                if (sectionId) {
-                    // Update active navigation link
-                    navLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href') === `#${sectionId}`) {
-                            link.classList.add('active');
-                        }
-                    });
+
+    // Particle System
+    function createParticles() {
+        const particlesContainer = document.getElementById('particles-container');
+        const particleCount = window.innerWidth > 768 ? 50 : 25;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+
+            // Random colors between white and purple
+            const colors = ['#ffffff', '#8B5CF6', '#A855F7', '#C084FC'];
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+            particlesContainer.appendChild(particle);
+        }
+    }
+
+    // Typing Animation
+    function typeWriter() {
+        const texts = [
+            'DevOps Engineer',
+            'AWS Trainer',
+            'Cloud Community Builder',
+            'CI/CD Specialist',
+            'Kubernetes Expert'
+        ];
+
+        const typingElement = document.querySelector('.typing-text');
+        if (!typingElement) return;
+
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+            const currentText = texts[textIndex];
+
+            if (isDeleting) {
+                typingElement.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingElement.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 100 : 150;
+
+            if (!isDeleting && charIndex === currentText.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        type();
+    }
+
+    // Skill Bar Animation
+    function animateSkillBars() {
+        const skillBars = document.querySelectorAll('.skill-progress');
+
+        skillBars.forEach(bar => {
+            const width = bar.getAttribute('data-width');
+            bar.style.width = width;
+        });
+    }
+
+    // Intersection Observer for Animations
+    function observeElements() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+
+                    // Animate skill bars when skills section is visible
+                    if (entry.target.classList.contains('skills')) {
+                        setTimeout(animateSkillBars, 500);
+                    }
                 }
-            }
-        });
-    }, observerOptions);
-    
-    // Observe all sections for active navigation
-    sections.forEach(section => {
-        if (section.id) {
-            navObserver.observe(section);
-        }
-    });
-    
-    // Navigation hide/show on scroll
-    let lastScrollY = window.scrollY;
-    const nav = document.querySelector('.nav-3d');
-    
-    window.addEventListener('scroll', debounce(() => {
-        const currentScrollY = window.scrollY;
-        
-        if (currentScrollY > lastScrollY && currentScrollY > 100) {
-            nav.style.transform = 'translateY(-100%)';
-        } else {
-            nav.style.transform = 'translateY(0)';
-        }
-        
-        lastScrollY = currentScrollY;
-    }, 10));
-}
+            });
+        }, observerOptions);
 
-// Enhanced Typing Effect
-function initializeTypingEffect() {
-    const typingElement = document.querySelector('.typing-text');
-    if (!typingElement) return;
-    
-    const texts = [
-        'DevOps Engineer | AWS Trainer | Cloud Community Builder',
-        'Kubernetes Expert | CI/CD Specialist',
-        'Infrastructure as Code Enthusiast',
-        'Cloud Solutions Architect',
-        'AWS Certified Professional'
-    ];
-    
-    let textIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    let isTyping = false;
-    
-    function typeText() {
-        if (isLoading || isTyping) return;
-        
-        isTyping = true;
-        const currentText = texts[textIndex];
-        
-        if (isDeleting) {
-            typingElement.textContent = currentText.substring(0, charIndex - 1);
-            charIndex--;
-        } else {
-            typingElement.textContent = currentText.substring(0, charIndex + 1);
-            charIndex++;
-        }
-        
-        let typeSpeed = isDeleting ? 30 : 80;
-        
-        if (!isDeleting && charIndex === currentText.length) {
-            typeSpeed = 2000;
-            isDeleting = true;
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            textIndex = (textIndex + 1) % texts.length;
-            typeSpeed = 500;
-        }
-        
-        setTimeout(() => {
-            isTyping = false;
-            typeText();
-        }, typeSpeed);
-    }
-    
-    // Start typing after a short delay
-    setTimeout(typeText, 1500);
-}
+        // Observe all sections
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => {
+            observer.observe(section);
+        });
 
-// Hero Animations
-function triggerHeroAnimations() {
-    const heroElements = document.querySelectorAll('.hero-title, .hero-subtitle, .hero-description, .hero-buttons');
-    
-    heroElements.forEach((element, index) => {
-        setTimeout(() => {
-            element.style.opacity = '1';
-            element.style.transform = 'translateX(0)';
-        }, index * 200);
-    });
-    
-    // Animate floating elements
-    const floatingElements = document.querySelectorAll('.floating-cloud, .floating-server, .floating-gear');
-    floatingElements.forEach((element, index) => {
-        setTimeout(() => {
-            element.style.opacity = '1';
-            element.style.animation = `float 3s ease-in-out infinite ${index}s`;
-        }, 500 + index * 200);
-    });
-}
-
-// Fixed Contact Form
-function initializeContactForm() {
-    const contactForm = document.querySelector('.contact-form');
-    if (!contactForm) return;
-    
-    // Create feedback element
-    const feedbackElement = document.createElement('div');
-    feedbackElement.className = 'form-feedback';
-    contactForm.insertBefore(feedbackElement, contactForm.firstChild);
-    
-    // Fix input field issues
-    const formControls = contactForm.querySelectorAll('.form-control');
-    formControls.forEach(control => {
-        // Remove any interfering styles
-        control.style.pointerEvents = 'auto';
-        control.style.zIndex = '1';
-        
-        // Add focus/blur effects with purple theme
-        control.addEventListener('focus', () => {
-            control.style.transform = 'perspective(1000px) rotateX(2deg)';
-            control.style.boxShadow = '0 10px 20px rgba(139, 92, 246, 0.2)';
-            control.style.borderColor = '#8B5CF6';
-        });
-        
-        control.addEventListener('blur', () => {
-            control.style.transform = 'perspective(1000px) rotateX(0deg)';
-            control.style.boxShadow = '';
-            control.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-        });
-    });
-    
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const button = contactForm.querySelector('button[type="submit"]');
-        const originalText = button.textContent;
-        
-        // Get form values
-        const nameInput = contactForm.querySelector('input[name="name"]');
-        const emailInput = contactForm.querySelector('input[name="email"]');
-        const messageInput = contactForm.querySelector('textarea[name="message"]');
-        
-        const name = nameInput.value.trim();
-        const email = emailInput.value.trim();
-        const message = messageInput.value.trim();
-        
-        // Validate form
-        if (!name || !email || !message) {
-            showFeedback('Please fill in all fields', 'error');
-            return;
-        }
-        
-        // Validate email
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            showFeedback('Please enter a valid email address', 'error');
-            return;
-        }
-        
-        // Animate button with purple theme
-        button.textContent = 'Sending...';
-        button.disabled = true;
-        button.style.transform = 'perspective(1000px) rotateX(10deg)';
-        button.style.background = '#ffaa00';
-        button.style.color = '#000000';
-        
-        // Show sending feedback
-        showFeedback('Sending your message...', 'info');
-        
-        // Simulate form submission
-        setTimeout(() => {
-            button.textContent = 'Message Sent!';
-            button.style.background = '#8B5CF6';
-            button.style.color = '#ffffff';
-            showFeedback('Thank you! Your message has been sent successfully. I will get back to you soon!', 'success');
-            
-            // Add success animation
-            button.style.transform = 'perspective(1000px) rotateX(0deg) scale(1.05)';
-            
-            setTimeout(() => {
-                button.textContent = originalText;
-                button.disabled = false;
-                button.style.transform = 'perspective(1000px) rotateX(0deg) scale(1)';
-                button.style.background = '';
-                button.style.color = '';
-                contactForm.reset();
-                hideFeedback();
-            }, 3000);
-        }, 2000);
-    });
-    
-    function showFeedback(message, type) {
-        feedbackElement.textContent = message;
-        feedbackElement.className = `form-feedback ${type} show`;
-    }
-    
-    function hideFeedback() {
-        feedbackElement.className = 'form-feedback';
-    }
-}
-
-// Enhanced Skill Animations with Purple theme
-function initializeSkillAnimations() {
-    const skillItems = document.querySelectorAll('.skill-item');
-    
-    skillItems.forEach(item => {
-        item.addEventListener('mouseenter', () => {
-            const icon = item.querySelector('.skill-icon');
-            if (icon) {
-                icon.style.animationDuration = '0.5s';
-            }
-            
-            // Create floating effect with enhanced animation
-            item.style.transform = 'perspective(1000px) rotateX(15deg) translateY(-20px)';
-            item.style.boxShadow = '0 30px 60px rgba(139, 92, 246, 0.4)';
-            
-            // Add pulsing glow effect with purple
-            item.style.background = 'linear-gradient(135deg, #8B5CF6, #ffffff)';
-            item.style.color = '#000000';
-            item.style.border = '2px solid #8B5CF6';
-        });
-        
-        item.addEventListener('mouseleave', () => {
-            const icon = item.querySelector('.skill-icon');
-            if (icon) {
-                icon.style.animationDuration = '3s';
-            }
-            
-            item.style.transform = 'perspective(1000px) rotateX(0deg) translateY(0)';
-            item.style.boxShadow = '';
-            item.style.background = '';
-            item.style.color = '';
-            item.style.border = '';
-        });
-    });
-}
-
-// Enhanced Project Cards
-function initializeProjectCards() {
-    const projectCards = document.querySelectorAll('.project-card-3d');
-    
-    projectCards.forEach(card => {
-        let hoverTimeout;
-        
-        card.addEventListener('mouseenter', () => {
-            clearTimeout(hoverTimeout);
-            const inner = card.querySelector('.project-inner');
-            if (inner) {
-                inner.style.transform = 'rotateY(180deg)';
-            }
-            
-            // Add scale effect with purple glow
-            card.style.transform = 'scale(1.05)';
-            card.style.zIndex = '10';
-            card.style.boxShadow = '0 20px 40px rgba(139, 92, 246, 0.3)';
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            hoverTimeout = setTimeout(() => {
-                const inner = card.querySelector('.project-inner');
-                if (inner) {
-                    inner.style.transform = 'rotateY(0deg)';
-                }
-                card.style.transform = 'scale(1)';
-                card.style.zIndex = '';
-                card.style.boxShadow = '';
-            }, 300);
-        });
-    });
-}
-
-// Enhanced Hover Effects with Purple theme
-function initializeHoverEffects() {
-    // Enhanced 3D button effects
-    const buttons = document.querySelectorAll('.btn-3d');
-    buttons.forEach(button => {
-        button.addEventListener('mouseenter', () => {
-            button.style.transform = 'perspective(1000px) rotateX(8deg) translateY(-5px)';
-            button.style.boxShadow = '0 20px 40px rgba(139, 92, 246, 0.4)';
-        });
-        
-        button.addEventListener('mouseleave', () => {
-            button.style.transform = 'perspective(1000px) rotateX(0deg) translateY(0)';
-            button.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.5)';
-        });
-    });
-    
-    // Enhanced timeline item effects
-    const timelineItems = document.querySelectorAll('.timeline-item');
-    timelineItems.forEach(item => {
-        item.addEventListener('mouseenter', () => {
-            const content = item.querySelector('.timeline-content');
-            if (content) {
-                content.style.transform = 'translateY(-10px) scale(1.05)';
-                content.style.boxShadow = '0 25px 50px rgba(139, 92, 246, 0.2)';
-                content.style.borderColor = '#8B5CF6';
-            }
-        });
-        
-        item.addEventListener('mouseleave', () => {
-            const content = item.querySelector('.timeline-content');
-            if (content) {
-                content.style.transform = 'translateY(0) scale(1)';
-                content.style.boxShadow = '';
-                content.style.borderColor = '';
-            }
-        });
-    });
-    
-    // Enhanced about card flip effect
-    const aboutCard = document.querySelector('.about-card-3d');
-    if (aboutCard) {
-        aboutCard.addEventListener('mouseenter', () => {
-            const inner = aboutCard.querySelector('.card-inner');
-            if (inner) {
-                inner.style.transform = 'rotateY(180deg)';
-            }
-            aboutCard.style.transform = 'scale(1.05)';
-            aboutCard.style.boxShadow = '0 20px 40px rgba(139, 92, 246, 0.3)';
-        });
-        
-        aboutCard.addEventListener('mouseleave', () => {
-            const inner = aboutCard.querySelector('.card-inner');
-            if (inner) {
-                inner.style.transform = 'rotateY(0deg)';
-            }
-            aboutCard.style.transform = 'scale(1)';
-            aboutCard.style.boxShadow = '';
+        // Observe individual elements
+        const elementsToObserve = document.querySelectorAll('.about-card, .skill-category, .timeline-item, .project-card');
+        elementsToObserve.forEach(element => {
+            observer.observe(element);
         });
     }
-    
-    // Enhanced contact item effects with purple theme
-    const contactItems = document.querySelectorAll('.contact-item-3d');
-    contactItems.forEach(item => {
-        item.addEventListener('mouseenter', () => {
-            item.style.transform = 'perspective(1000px) rotateX(10deg) translateY(-8px)';
-            item.style.background = 'linear-gradient(135deg, #8B5CF6, #ffffff)';
-            item.style.color = '#000000';
-            item.style.border = '2px solid #8B5CF6';
-            
-            const text = item.querySelector('.contact-text');
-            const icon = item.querySelector('.contact-icon');
-            if (text) {
-                text.style.color = '#000000';
-                const h3 = text.querySelector('h3');
-                const p = text.querySelector('p');
-                if (h3) h3.style.color = '#000000';
-                if (p) p.style.color = '#000000';
-            }
-            if (icon) icon.style.transform = 'rotate(360deg) scale(1.2)';
-        });
-        
-        item.addEventListener('mouseleave', () => {
-            item.style.transform = 'perspective(1000px) rotateX(0deg) translateY(0)';
-            item.style.background = '';
-            item.style.color = '';
-            item.style.border = '';
-            
-            const text = item.querySelector('.contact-text');
-            const icon = item.querySelector('.contact-icon');
-            if (text) {
-                text.style.color = '';
-                const h3 = text.querySelector('h3');
-                const p = text.querySelector('p');
-                if (h3) h3.style.color = '';
-                if (p) p.style.color = '';
-            }
-            if (icon) icon.style.transform = 'rotate(0deg) scale(1)';
-        });
-    });
-}
 
-// Button initialization with improved event handling
-function initializeButtons() {
-    // Download CV functionality
-    const downloadBtn = document.querySelector('.btn--primary');
-    if (downloadBtn && downloadBtn.textContent.includes('Download CV')) {
-        downloadBtn.addEventListener('click', function(e) {
+    // Contact Form Handling
+    function handleContactForm() {
+        const form = document.getElementById('contact-form');
+        if (!form) return;
+
+        form.addEventListener('submit', function(e) {
             e.preventDefault();
-            e.stopPropagation();
-            
-            // Create comprehensive CV content
-            const cvContent = `
-PUSHKAR LAL
-DevOps Engineer | AWS Trainer | Cloud Community Builder
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-CONTACT INFORMATION
-📧 Email: pushkar3002@gmail.com
-📱 Phone: +91 9661986771
-🌐 LinkedIn: linkedin.com/in/pushkar-lal-814609202
-💬 WhatsApp: wa.me/919661986771
-📍 Location: Jaipur, Rajasthan, India
+            // Get form data
+            const formData = new FormData(form);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
 
-PROFESSIONAL SUMMARY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Passionate DevOps Engineer with expertise in AWS Cloud, Kubernetes, and CI/CD practices. 
-Specialized in training professionals and organizations to harness the power of cloud technology.
-Helping teams scale with automation, infrastructure optimization, and modern DevOps practices.
+            // Simple validation
+            if (!name || !email || !subject || !message) {
+                alert('Please fill in all fields');
+                return;
+            }
 
-TECHNICAL SKILLS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-☁️ Cloud Platforms: AWS (Advanced), Azure
-🔧 DevOps Tools: Jenkins, GitLab CI, ArgoCD, Docker, Kubernetes
-📊 Monitoring: Grafana, Prometheus, AWS CloudWatch
-🏗️ Infrastructure: AWS EC2, EKS, Terraform, CloudFormation
-🐧 Operating Systems: Linux (Ubuntu, CentOS, Amazon Linux)
-📝 Version Control: Git, GitHub, GitLab
-🔄 CI/CD: Pipeline automation, deployment strategies
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
 
-PROFESSIONAL EXPERIENCE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-DevOps Engineer | TECH GLANCE SERVICE (TGS)
-September 2023 - Present
-• Implementing DevOps best practices on AWS and Azure cloud platforms
-• Designing scalable cloud infrastructure and optimizing deployment pipelines
-• Automating CI/CD processes to improve development workflow efficiency
-• Managing containerized applications using Docker and Kubernetes
+            // Simulate form submission
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
 
-Student | LinuxWorld Informatics Pvt Ltd
-September 2023 - Present
-• Continuous learning and development in DevOps and cloud technologies
-• Specialized training in AWS, Kubernetes, and modern DevOps practices
-• Hands-on experience with real-world cloud infrastructure projects
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            submitButton.disabled = true;
 
-EDUCATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Bachelor of Technology - Artificial Intelligence
-Suresh Gyan Vihar University | August 2023 - April 2026
-
-Diploma in Computer Science
-Suresh Gyan Vihar University | 2020 - 2023
-
-CERTIFICATIONS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🏆 Mastering Git & GitHub: From Basic to Advanced Workflows
-🏆 Linux for DevOps Engineers and Developers
-🏆 PromptOps: AI-Powered DevOps
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-"Helping You Scale With The Cloud"
-            `;
-            
-            const blob = new Blob([cvContent], { type: 'text/plain' });
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'Pushkar_Lal_DevOps_Resume.txt';
-            link.click();
-            window.URL.revokeObjectURL(url);
-            
-            // Show success message with purple theme
-            const originalText = this.textContent;
-            this.textContent = 'Downloaded!';
-            this.style.background = '#8B5CF6';
-            this.style.color = '#ffffff';
-            
             setTimeout(() => {
-                this.textContent = originalText;
-                this.style.background = '';
-                this.style.color = '';
+                alert('Thank you for your message! I will get back to you soon.');
+                form.reset();
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
             }, 2000);
         });
     }
-    
-    // Contact button functionality
-    const contactBtn = document.querySelector('.btn--outline');
-    if (contactBtn && contactBtn.textContent.includes('Contact Me')) {
-        contactBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const contactSection = document.getElementById('contact');
-            if (contactSection) {
-                const nav = document.querySelector('.nav-3d');
-                const navHeight = nav ? nav.offsetHeight : 0;
-                const elementPosition = contactSection.offsetTop;
-                const offsetPosition = elementPosition - navHeight - 20;
-                
-                window.scrollTo({
-                    top: Math.max(0, offsetPosition),
-                    behavior: 'smooth'
-                });
+
+    // Navbar Scroll Effect
+    function handleNavbarScroll() {
+        const navbar = document.querySelector('.navbar');
+
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(0, 0, 0, 0.95)';
+                navbar.style.padding = '0.5rem 0';
+            } else {
+                navbar.style.background = 'rgba(0, 0, 0, 0.9)';
+                navbar.style.padding = '1rem 0';
             }
         });
     }
-}
 
-// Performance optimization
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
+    // Cursor Trail Effect
+    function createCursorTrail() {
+        if (window.innerWidth <= 768) return; // Skip on mobile
 
-// Mobile responsiveness
-function initializeMobileFeatures() {
-    const isMobile = window.innerWidth <= 768;
-    
-    if (isMobile) {
-        // Reduce particle density on mobile
-        const particles = document.querySelector('.particles');
-        if (particles) {
-            particles.style.opacity = '0.5';
+        const trail = [];
+        const trailLength = 20;
+
+        for (let i = 0; i < trailLength; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'cursor-dot';
+            dot.style.position = 'fixed';
+            dot.style.width = '4px';
+            dot.style.height = '4px';
+            dot.style.background = '#8B5CF6';
+            dot.style.borderRadius = '50%';
+            dot.style.pointerEvents = 'none';
+            dot.style.zIndex = '9999';
+            dot.style.opacity = '0';
+            dot.style.transition = 'opacity 0.3s ease';
+            document.body.appendChild(dot);
+            trail.push(dot);
         }
-        
-        // Simplify 3D effects on mobile
-        const card3d = document.querySelectorAll('.about-card-3d, .project-card-3d');
-        card3d.forEach(card => {
-            card.style.perspective = '500px';
+
+        document.addEventListener('mousemove', function(e) {
+            trail.forEach((dot, index) => {
+                setTimeout(() => {
+                    dot.style.left = e.clientX + 'px';
+                    dot.style.top = e.clientY + 'px';
+                    dot.style.opacity = (trailLength - index) / trailLength;
+                }, index * 50);
+            });
         });
-        
-        // Disable cursor trail on mobile
-        const cursor = document.querySelector('.cursor-trail');
-        if (cursor) {
-            cursor.style.display = 'none';
+    }
+
+    // 3D Tilt Effect for Cards
+    function add3DTiltEffect() {
+        const cards = document.querySelectorAll('.about-card, .skill-category, .project-card');
+
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'perspective(1000px) rotateX(10deg) rotateY(10deg) translateZ(20px)';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+            });
+
+            card.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+
+                const mouseX = e.clientX - centerX;
+                const mouseY = e.clientY - centerY;
+
+                const rotateX = (mouseY / rect.height) * 30;
+                const rotateY = (mouseX / rect.width) * 30;
+
+                this.style.transform = `perspective(1000px) rotateX(${-rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
+            });
+        });
+    }
+
+    // Parallax Effect
+    function addParallaxEffect() {
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+
+            const particles = document.getElementById('particles-container');
+            if (particles) {
+                particles.style.transform = `translateY(${rate}px)`;
+            }
+        });
+    }
+
+    // Initialize All Animations
+    function initializeAnimations() {
+        createParticles();
+        typeWriter();
+        observeElements();
+        handleContactForm();
+        handleNavbarScroll();
+        createCursorTrail();
+        add3DTiltEffect();
+        addParallaxEffect();
+    }
+
+    // Responsive handling
+    function handleResize() {
+        window.addEventListener('resize', function() {
+            // Recreate particles on resize
+            const particlesContainer = document.getElementById('particles-container');
+            if (particlesContainer) {
+                particlesContainer.innerHTML = '';
+                createParticles();
+            }
+        });
+    }
+
+    // Initialize resize handler
+    handleResize();
+
+    // Performance optimization
+    function optimizePerformance() {
+        // Reduce animations on low-end devices
+        const isLowEndDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4;
+
+        if (isLowEndDevice) {
+            document.body.classList.add('low-end-device');
+
+            // Disable heavy animations
+            const style = document.createElement('style');
+            style.textContent = `
+                .low-end-device .particle {
+                    animation: none !important;
+                }
+                .low-end-device .cube {
+                    animation: rotateCube 8s infinite linear !important;
+                }
+            `;
+            document.head.appendChild(style);
         }
     }
-}
 
-// Initialize mobile features
-window.addEventListener('resize', debounce(initializeMobileFeatures, 250));
-initializeMobileFeatures();
+    // Initialize performance optimizations
+    optimizePerformance();
 
-// Enhanced Parallax Effect
-function initializeParallax() {
-    const parallaxElements = document.querySelectorAll('.floating-cloud, .floating-server, .floating-gear');
-    
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.3;
-        
-        parallaxElements.forEach((element, index) => {
-            const speed = 0.3 + (index * 0.1);
-            if (element) {
-                element.style.transform = `translateY(${rate * speed}px)`;
-            }
+    // Add loading animation to buttons
+    function addButtonAnimations() {
+        const buttons = document.querySelectorAll('.btn');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+    }
+
+    // Initialize button animations
+    addButtonAnimations();
+
+    // Preload images for better performance
+    function preloadImages() {
+        const images = [
+            'profile.jpg'
+        ];
+
+        images.forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+    }
+
+    // Initialize image preloading
+    preloadImages();
+
+    // Add smooth scroll behavior for older browsers
+    function smoothScrollPolyfill() {
+        const links = document.querySelectorAll('a[href^="#"]');
+
+        links.forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+
+                    if (target) {
+                        const targetPosition = target.offsetTop - 70;
+                        const startPosition = window.pageYOffset;
+                        const distance = targetPosition - startPosition;
+                        const duration = 1000;
+                        let start = null;
+
+                        function animation(currentTime) {
+                            if (start === null) start = currentTime;
+                            const timeElapsed = currentTime - start;
+                            const run = ease(timeElapsed, startPosition, distance, duration);
+                            window.scrollTo(0, run);
+                            if (timeElapsed < duration) requestAnimationFrame(animation);
+                        }
+
+                        function ease(t, b, c, d) {
+                            t /= d / 2;
+                            if (t < 1) return c / 2 * t * t + b;
+                            t--;
+                            return -c / 2 * (t * (t - 2) - 1) + b;
+                        }
+
+                        requestAnimationFrame(animation);
+                    }
+                }
+            });
+        });
+    }
+
+    // Initialize smooth scroll polyfill
+    smoothScrollPolyfill();
+
+    // Add active navigation highlighting
+    function highlightActiveNavigation() {
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', function() {
+            let current = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    }
+
+    // Initialize active navigation highlighting
+    highlightActiveNavigation();
+
+    // Add CSS for active navigation
+    const style = document.createElement('style');
+    style.textContent = `
+        .nav-link.active {
+            color: var(--primary-color) !important;
+        }
+        .nav-link.active::after {
+            width: 100% !important;
+        }
+    `;
+    document.head.appendChild(style);
+
+    console.log('Portfolio initialized successfully!');
+});
+
+// Service Worker for better performance (optional)
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js').then(function(registration) {
+            console.log('ServiceWorker registration successful');
+        }, function(err) {
+            console.log('ServiceWorker registration failed: ', err);
         });
     });
 }
-
-// Initialize parallax after loading
-setTimeout(() => {
-    if (!isLoading) {
-        initializeParallax();
-    }
-}, 4000);
-
-// Console messages
-console.log('🚀 Pushkar Lal Portfolio - Purple Edition Loaded Successfully!');
-console.log('💜 3D Animations Active | Particle System Online | Purple Theme Engaged');
-console.log('🔥 Navigation Fixed | Contact Form Functional | All Systems Go!');
